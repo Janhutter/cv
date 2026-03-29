@@ -216,36 +216,73 @@ const PublicationsPage = () => {
   useEffect(() => {
     const fetchPubs = async () => {
       try {
-        // Try to fetch from the static JSON file (GitHub Pages)
-        // or the API endpoint (Development)
-        const response = await fetch('/publications.json');
-        if (!response.ok) {
-          // Fallback to API if static file not found (e.g. in dev)
-          const apiResponse = await fetch('/api/publications');
-          const data = await apiResponse.json();
-          if (Array.isArray(data)) {
-            setPublications(data);
-          } else {
-            setPublications([]);
-          }
-        } else {
+        // 1. Try static JSON file (GitHub Pages)
+        const response = await fetch(`/publications.json?t=${Date.now()}`);
+        const contentType = response.headers.get("content-type");
+        
+        if (response.ok && contentType?.includes("application/json")) {
           const data = await response.json();
           if (Array.isArray(data)) {
             setPublications(data);
-          } else {
-            setPublications([]);
+            setLoading(false);
+            return;
           }
         }
+        
+        // 2. Fallback to API (Development)
+        const apiResponse = await fetch('/api/publications');
+        const apiContentType = apiResponse.headers.get("content-type");
+        
+        if (apiResponse.ok && apiContentType?.includes("application/json")) {
+          const data = await apiResponse.json();
+          if (Array.isArray(data)) {
+            setPublications(data);
+            setLoading(false);
+            return;
+          }
+        }
+
+        // 3. Final fallback: Seed data if everything else fails
+        // This prevents the "Unexpected token <" error when the server returns index.html
+        setPublications([
+          {
+            title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
+            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
+            authors: "J Hutter, M Marx, J Kamps",
+            venue: "47th European Conference on Information Retrieval (ECIR 2025)",
+            citations: "7",
+            year: "2025"
+          },
+          {
+            title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
+            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
+            authors: "J Hutter, M Marx, J Kamps",
+            venue: "University of Amsterdam",
+            citations: "0",
+            year: "2024"
+          }
+        ]);
       } catch (error) {
         console.error("Failed to fetch publications:", error);
-        // Final fallback to API if everything fails
-        try {
-          const apiResponse = await fetch('/api/publications');
-          const data = await apiResponse.json();
-          if (Array.isArray(data)) setPublications(data);
-        } catch (e) {
-          setPublications([]);
-        }
+        // Fallback to seed data on any network error
+        setPublications([
+          {
+            title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
+            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
+            authors: "J Hutter, M Marx, J Kamps",
+            venue: "47th European Conference on Information Retrieval (ECIR 2025)",
+            citations: "7",
+            year: "2025"
+          },
+          {
+            title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
+            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
+            authors: "J Hutter, M Marx, J Kamps",
+            venue: "University of Amsterdam",
+            citations: "0",
+            year: "2024"
+          }
+        ]);
       } finally {
         setLoading(false);
       }
