@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Newsreader", serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+
+  --color-surface: #f9f9f9;
+  --color-surface-container-low: #f3f3f3;
+  --color-surface-container-lowest: #ffffff;
+  --color-primary: #0057cd;
+  --color-primary-container: #0d6efd;
+  --color-on-surface: #1a1c1c;
+  --color-on-surface-variant: #424655;
+  --color-outline-variant: #c2c6d8;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+}
+
+/* Custom scrollbar for a cleaner look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-outline-variant/20 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-outline-variant/40;
+}
