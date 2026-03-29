@@ -486,30 +486,9 @@ const EducationPage = () => (
 // --- Main App ---
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('home');
-
-  // Scroll to top on tab change
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [activeTab]);
-
   return (
-    <div className="min-h-screen bg-surface selection:bg-primary/10 selection:text-primary">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
-      
-      <main className="md:ml-64 min-h-screen">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 pt-24 pb-32">
-          <AnimatePresence mode="wait">
-            {activeTab === 'home' && <HomePage key="home" />}
-            {activeTab === 'publications' && <PublicationsPage key="pubs" />}
-            {activeTab === 'experience' && <ExperiencePage key="exp" />}
-            {activeTab === 'education' && <EducationPage key="edu" />}
-          </AnimatePresence>
-          
-          <Footer />
-        </div>
-      </main>
+    <div className="min-h-screen flex items-center justify-center bg-stone-50">
+      <h1 className="text-4xl font-headline italic text-stone-900">Academic Portfolio | Jan Hutter</h1>
     </div>
   );
 }
