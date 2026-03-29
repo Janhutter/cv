@@ -216,17 +216,36 @@ const PublicationsPage = () => {
   useEffect(() => {
     const fetchPubs = async () => {
       try {
-        const response = await fetch('/api/publications');
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          setPublications(data);
+        // Try to fetch from the static JSON file (GitHub Pages)
+        // or the API endpoint (Development)
+        const response = await fetch('/publications.json');
+        if (!response.ok) {
+          // Fallback to API if static file not found (e.g. in dev)
+          const apiResponse = await fetch('/api/publications');
+          const data = await apiResponse.json();
+          if (Array.isArray(data)) {
+            setPublications(data);
+          } else {
+            setPublications([]);
+          }
         } else {
-          console.error("Received non-array data for publications:", data);
-          setPublications([]);
+          const data = await response.json();
+          if (Array.isArray(data)) {
+            setPublications(data);
+          } else {
+            setPublications([]);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch publications:", error);
-        setPublications([]);
+        // Final fallback to API if everything fails
+        try {
+          const apiResponse = await fetch('/api/publications');
+          const data = await apiResponse.json();
+          if (Array.isArray(data)) setPublications(data);
+        } catch (e) {
+          setPublications([]);
+        }
       } finally {
         setLoading(false);
       }
