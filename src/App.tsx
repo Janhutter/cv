@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Home as HomeIcon, 
-  FileText, 
-  Briefcase, 
-  GraduationCap, 
-  Github, 
-  Download, 
+import {
+  Home as HomeIcon,
+  FileText,
+  Briefcase,
+  GraduationCap,
+  Github,
+  Download,
   ArrowUpRight,
   ArrowRight,
   Code,
@@ -17,12 +17,19 @@ import {
   BrainCircuit,
   Mail,
   Search,
-  MessageSquare
+  MessageSquare,
+  Library,
+  Linkedin,
+  Folder,
+  Eye,
+  Compass,
+  Zap,
+  Network
 } from 'lucide-react';
 
 // --- Types ---
 
-type Tab = 'home' | 'publications' | 'experience' | 'education';
+type Tab = 'home' | 'publications' | 'projects' | 'experience' | 'education';
 
 interface Publication {
   title: string;
@@ -35,10 +42,11 @@ interface Publication {
 
 // --- Components ---
 
-const Sidebar = ({ activeTab, setActiveTab }: { activeTab: Tab, setActiveTab: (tab: Tab) => void }) => {
+const Sidebar = ({ activeTab, scrollToSection }: { activeTab: Tab, scrollToSection: (tab: Tab) => void }) => {
   const navItems: { id: Tab, label: string, icon: any }[] = [
     { id: 'home', label: 'Home', icon: HomeIcon },
     { id: 'publications', label: 'Publications', icon: FileText },
+    { id: 'projects', label: 'Projects', icon: Folder },
     { id: 'experience', label: 'Experience', icon: Briefcase },
     { id: 'education', label: 'Education', icon: GraduationCap },
   ];
@@ -54,12 +62,11 @@ const Sidebar = ({ activeTab, setActiveTab }: { activeTab: Tab, setActiveTab: (t
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`font-headline font-medium text-lg flex items-center gap-3 transition-all duration-300 text-left ${
-                activeTab === item.id 
-                  ? 'text-primary border-r-2 border-primary pr-4' 
-                  : 'text-stone-500 hover:text-stone-900'
-              }`}
+              onClick={() => scrollToSection(item.id)}
+              className={`font-headline font-medium text-lg flex items-center gap-3 transition-all duration-300 text-left ${activeTab === item.id
+                ? 'text-primary border-r-2 border-primary pr-4'
+                : 'text-stone-500 hover:text-stone-900'
+                }`}
             >
               <item.icon size={20} strokeWidth={activeTab === item.id ? 2.5 : 2} />
               {item.label}
@@ -69,6 +76,9 @@ const Sidebar = ({ activeTab, setActiveTab }: { activeTab: Tab, setActiveTab: (t
       </div>
       <div className="space-y-6">
         <div className="flex flex-col space-y-3">
+          <a href="https://www.linkedin.com/in/jan--hutter/" target="_blank" rel="noopener noreferrer" className="font-body text-[10px] uppercase tracking-widest text-stone-400 hover:text-stone-900 transition-colors flex items-center gap-2">
+            <Linkedin size={14} /> LinkedIn
+          </a>
           <a href="https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl" target="_blank" rel="noopener noreferrer" className="font-body text-[10px] uppercase tracking-widest text-stone-400 hover:text-stone-900 transition-colors flex items-center gap-2">
             <School size={14} /> Scholar
           </a>
@@ -84,10 +94,11 @@ const Sidebar = ({ activeTab, setActiveTab }: { activeTab: Tab, setActiveTab: (t
   );
 };
 
-const BottomNav = ({ activeTab, setActiveTab }: { activeTab: Tab, setActiveTab: (tab: Tab) => void }) => {
+const BottomNav = ({ activeTab, scrollToSection }: { activeTab: Tab, scrollToSection: (tab: Tab) => void }) => {
   const navItems: { id: Tab, label: string, icon: any }[] = [
     { id: 'home', label: 'Home', icon: HomeIcon },
     { id: 'publications', label: 'Pubs', icon: FileText },
+    { id: 'projects', label: 'Projects', icon: Folder },
     { id: 'experience', label: 'Exp', icon: Briefcase },
     { id: 'education', label: 'Edu', icon: GraduationCap },
   ];
@@ -97,10 +108,9 @@ const BottomNav = ({ activeTab, setActiveTab }: { activeTab: Tab, setActiveTab: 
       {navItems.map((item) => (
         <button
           key={item.id}
-          onClick={() => setActiveTab(item.id)}
-          className={`flex flex-col items-center gap-1 transition-colors ${
-            activeTab === item.id ? 'text-primary' : 'text-stone-400'
-          }`}
+          onClick={() => scrollToSection(item.id)}
+          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === item.id ? 'text-primary' : 'text-stone-400'
+            }`}
         >
           <item.icon size={20} />
           <span className="text-[10px] font-label uppercase font-bold">{item.label}</span>
@@ -125,7 +135,7 @@ const Footer = () => (
 // --- Page Content ---
 
 const HomePage = () => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -20 }}
@@ -133,15 +143,18 @@ const HomePage = () => (
   >
     <section className="space-y-12">
       {/* <h2 className="font-headline text-5xl md:text-7xl text-on-surface leading-[1.1] tracking-tight max-w-3xl"> */}
-        {/* Improving <span className="italic text-primary">Information Retrieval</span> through dense neural systems. */}
+      {/* Improving <span className="italic text-primary">Information Retrieval</span> through dense neural systems. */}
       {/* </h2> */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-        <div className="md:col-start-5 md:col-span-8 space-y-8">
+        <div className="md:col-span-12 lg:col-span-8 space-y-8">
           <p className="font-body text-xl md:text-2xl text-on-surface-variant leading-relaxed font-light">
             Student MSc AI and student assistant at the University of Amsterdam.
           </p>
           <div className="flex gap-6">
-            <a href="https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-[0.2em] text-primary hover:gap-4 transition-all group">
+            <a href="https://www.linkedin.com/in/jan--hutter/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-[0.2em] text-primary hover:gap-4 transition-all group">
+              LinkedIn <ArrowUpRight size={16} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a href="https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-900 transition-all group">
               Google Scholar <ArrowUpRight size={16} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
             </a>
             <a href="https://github.com/Janhutter" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-900 transition-all group">
@@ -151,73 +164,6 @@ const HomePage = () => (
         </div>
       </div>
     </section>
-
-    <section className="space-y-12">
-      <div className="flex items-baseline justify-between border-b border-outline-variant/20 pb-4">
-        <h3 className="font-headline text-3xl italic">Key Projects</h3>
-        <span className="font-label text-[10px] uppercase tracking-widest text-stone-400">Selected Work</span>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group">
-          <Search className="text-primary mb-8" size={32} strokeWidth={1.5} />
-          <h4 className="font-headline text-2xl mb-4">Sequential Recommendation</h4>
-          <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-8">
-            A systematic reproducibility study of BSARec, exploring the effectiveness of utilizing the Fourier Transform inside the model architecture. Accepted at ECIR 2026.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['Recommender Systems', 'Reproducibility'].map(tag => (
-              <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">{tag}</span>
-            ))}
-          </div>
-        </div>
-              <div className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group">
-          <Search className="text-primary mb-8" size={32} strokeWidth={1.5} />
-          <h4 className="font-headline text-2xl mb-4">Conversational Search</h4>
-          <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-8">
-            Reproducibility study of DiSCo, a distillation method for sparse conversational search. Accepted at SCAI 2026.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['Recommender Systems', 'Reproducibility'].map(tag => (
-              <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">{tag}</span>
-            ))}
-          </div>
-        </div>
-        <div className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group">
-          <BrainCircuit className="text-primary mb-8" size={32} strokeWidth={1.5} />
-          <h4 className="font-headline text-2xl mb-4">Positional Bias in RAG</h4>
-          <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-8">
-            A systematic analysis of how the position of retrieved documents impacts response quality in Retrieval Augmented Generation. Accepted at ECIR 2025.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['NLP', 'RAG', 'Information Retrieval'].map(tag => (
-              <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">{tag}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section className="space-y-12">
-      <div className="flex items-baseline justify-between border-b border-outline-variant/20 pb-4">
-        <h3 className="font-headline text-3xl italic">Recent Updates</h3>
-        <span className="font-label text-[10px] uppercase tracking-widest text-stone-400">News</span>
-      </div>
-      <div className="divide-y divide-stone-200/50">
-        {[
-          { date: 'June 2025', title: 'Paper Accepted at ECIR 2025', desc: 'Our work "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation" was accepted for the 47th European Conference on Information Retrieval.' },
-          { date: 'Sept 2024', title: 'Started MSc AI at UvA', desc: 'Began my Master of Science in Artificial Intelligence and joined the ELLIS MSc Honours Programme.' },
-          { date: 'Aug 2024', title: 'Bachelor Thesis Completed', desc: 'Successfully defended my thesis on positional bias in RAG, receiving a grade of 8.5.' }
-        ].map((news, i) => (
-          <div key={i} className="group py-10 flex flex-col md:flex-row gap-4 md:gap-24 hover:bg-stone-50/50 transition-colors px-4 -mx-4">
-            <time className="font-label text-[10px] uppercase tracking-[0.2em] text-stone-400 pt-1 shrink-0">{news.date}</time>
-            <div className="space-y-2">
-              <h5 className="font-headline text-xl text-on-surface group-hover:text-primary transition-colors">{news.title}</h5>
-              <p className="font-body text-on-surface-variant text-sm leading-relaxed max-w-xl">{news.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
   </motion.div>
 );
 
@@ -225,30 +171,47 @@ const PublicationsPage = () => {
   const [publications, setPublications] = useState<Publication[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const desiredOrder = [
+    "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
+    "Improving the Efficiency and Effectiveness of LLM Knowledge Distillation for Conversational Search",
+    "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation"
+  ];
+
+  const sortPublications = (pubs: Publication[]) => {
+    return [...pubs].sort((a, b) => {
+      const indexA = desiredOrder.findIndex(title => a.title.toLowerCase().includes(title.toLowerCase()));
+      const indexB = desiredOrder.findIndex(title => b.title.toLowerCase().includes(title.toLowerCase()));
+
+      const valA = indexA === -1 ? Infinity : indexA;
+      const valB = indexB === -1 ? Infinity : indexB;
+      return valA - valB;
+    });
+  };
+
   useEffect(() => {
     const fetchPubs = async () => {
       try {
         // 1. Try static JSON file (GitHub Pages)
         const response = await fetch(`publications.json?t=${Date.now()}`);
         const contentType = response.headers.get("content-type");
-        
+
         if (response.ok && contentType?.includes("application/json")) {
           const data = await response.json();
           if (Array.isArray(data)) {
-            setPublications(data);
+            setPublications(sortPublications(data));
             setLoading(false);
             return;
           }
         }
-        
+
         // 2. Fallback to API (Development)
         const apiResponse = await fetch('api/publications');
         const apiContentType = apiResponse.headers.get("content-type");
-        
+
         if (apiResponse.ok && apiContentType?.includes("application/json")) {
           const data = await apiResponse.json();
           if (Array.isArray(data)) {
-            setPublications(data);
+            setPublications(sortPublications(data));
             setLoading(false);
             return;
           }
@@ -258,42 +221,58 @@ const PublicationsPage = () => {
         // This prevents the "Unexpected token <" error when the server returns index.html
         setPublications([
           {
-            title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
-            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
-            authors: "J Hutter, M Marx, J Kamps",
-            venue: "47th European Conference on Information Retrieval (ECIR 2025)",
-            citations: "7",
-            year: "2025"
+            title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:d1gkVwhDpl0C",
+            authors: "J Hutter, HC Bakker, S Fris, M Bernardy, Y Liu",
+            venue: "48th European Conference on Information Retrieval (ECIR 2026)",
+            citations: "0",
+            year: "2026"
           },
           {
-            title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
-            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
-            authors: "J Hutter, M Marx, J Kamps",
-            venue: "University of Amsterdam",
+            title: "Improving the Efficiency and Effectiveness of LLM Knowledge Distillation for Conversational Search",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:9yKSN-GCB0IC",
+            authors: "S Fris, J Hutter, JH Bertrand, S Lupart, M Aliannejadi",
+            venue: "11th International ACM SIGIR Seminar on Conversational Search (SCAI 2026)",
             citations: "0",
-            year: "2024"
-          }
+            year: "2026"
+          },
+          {
+            title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:u-x6o8ySG0sC",
+            authors: "J Hutter, D Rau, M Marx, J Kamps",
+            venue: "47th European Conference on Information Retrieval (ECIR 2025)",
+            citations: "8",
+            year: "2025"
+          },
         ]);
       } catch (error) {
         console.error("Failed to fetch publications:", error);
         // Fallback to seed data on any network error
         setPublications([
           {
-            title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
-            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
-            authors: "J Hutter, M Marx, J Kamps",
-            venue: "47th European Conference on Information Retrieval (ECIR 2025)",
-            citations: "7",
-            year: "2025"
+            title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:d1gkVwhDpl0C",
+            authors: "J Hutter, HC Bakker, S Fris, M Bernardy, Y Liu",
+            venue: "48th European Conference on Information Retrieval (ECIR 2026)",
+            citations: "0",
+            year: "2026"
           },
           {
-            title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
-            link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
-            authors: "J Hutter, M Marx, J Kamps",
-            venue: "University of Amsterdam",
+            title: "Improving the Efficiency and Effectiveness of LLM Knowledge Distillation for Conversational Search",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:9yKSN-GCB0IC",
+            authors: "S Fris, J Hutter, JH Bertrand, S Lupart, M Aliannejadi",
+            venue: "11th International ACM SIGIR Seminar on Conversational Search (SCAI 2026)",
             citations: "0",
-            year: "2024"
-          }
+            year: "2026"
+          },
+          {
+            title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:u-x6o8ySG0sC",
+            authors: "J Hutter, D Rau, M Marx, J Kamps",
+            venue: "47th European Conference on Information Retrieval (ECIR 2025)",
+            citations: "8",
+            year: "2025"
+          },
         ]);
       } finally {
         setLoading(false);
@@ -303,7 +282,7 @@ const PublicationsPage = () => {
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -311,12 +290,9 @@ const PublicationsPage = () => {
     >
       <header className="max-w-3xl space-y-8">
         <h2 className="font-headline text-6xl md:text-8xl leading-[0.9] tracking-tight italic font-light">
-          Research <br/>Publications
+          Research <br />Publications
         </h2>
         <div className="h-px w-24 bg-primary"></div>
-        <p className="font-body text-xl text-on-surface-variant leading-relaxed font-light">
-          Automatically synced from Google Scholar. Exploring the boundaries of RAG, sequential recommendation, and information retrieval.
-        </p>
       </header>
 
       <div className="space-y-24">
@@ -361,8 +337,132 @@ const PublicationsPage = () => {
   );
 };
 
+const ProjectsPage = () => {
+  const projects = [
+    {
+      title: "S-TTRL: Sample-Wise Test-Time Reinforcement Learning for Large Language Models",
+      pdf: "other_papers/S_TTRL__Sample_Wise_Test_Time_Reinforcement_Learning_for_Large_Language_Models_ehn5m4my.pdf",
+      description: "We introduce a per-query adaptation framework that improves LLMs using only the single unlabeled prompt at hand. S-TTRL addresses signal sparsity, overfitting, and latency trade-offs by generating multiple candidates and optimizing the policy at test time.",
+      supervisors: [
+        { name: "Yingjun Du", link: "https://github.com/Yingjun-Du" },
+        { name: "Cees Snoek", link: "https://www.ceessnoek.info/" }
+      ],
+      tags: ["TTRL", "LLM Alignment", "Test-Time Adaptation"],
+      icon: BrainCircuit
+    },
+    {
+      title: "Rep2D-BEAT: Evaluating and Enhancing Spatial Understanding in Vision-Language Models",
+      pdf: "other_papers/foundation_models_course.pdf",
+      description: "We introduce the Rep2D-BEAT benchmark to evaluate and enhance the spatial reasoning abilities of vision-language models. Using replica 3D scans, we generate multi-view 2D images to evaluate models on viewpoint-shifted localization tasks.",
+      supervisor: { name: "Samuele Papa", link: "https://samuelepapa.github.io/" },
+      tags: ["VLM", "Spatial Reasoning", "3D Scene Understanding"],
+      icon: Compass
+    },
+    {
+      title: "TET: Introducing Energy To Test-Time Training",
+      pdf: "other_papers/DL2_course.pdf",
+      description: "We connect Test-Time Training (TTT) and Test-Time Adaptation (TTA) to improve out-of-distribution generalization. We propose TET, which introduces a stable pretraining phase to energy-based test-time adaptation.",
+      supervisor: { name: "Mona Schirmer", link: "https://amlab.science.uva.nl/people/MonaSchirmer/" },
+      tags: ["TTA", "TTT", "Energy-Based Models"],
+      icon: Zap
+    },
+    {
+      title: "[RE] Are Your Models Still Fair? Fairness Attacks on Graph Neural Networks via Node Injections",
+      pdf: "other_papers/fact_course.pdf",
+      description: "A replicability study evaluating node injection-based fairness attacks on Graph Neural Networks. We analyze the proposed attack's performance and investigate its capability to undermine fairness under training graph poisoning.",
+      supervisor: { name: "Jesse Wonnink" },
+      tags: ["GNN", "Fairness Attack", "Reproducibility"],
+      icon: Scale
+    }
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="space-y-32"
+    >
+      <header className="max-w-3xl space-y-8">
+        <h2 className="font-headline text-6xl md:text-8xl leading-[0.9] tracking-tight">
+          Course <br /><span className="italic font-light">Projects</span>
+        </h2>
+        <p className="font-body text-xl text-on-surface-variant leading-relaxed font-light">
+          During my Master's at the University of Amsterdam, I have contributed to several research papers as part of course projects.
+        </p>
+        <div className="h-px w-24 bg-primary"></div>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {projects.map((proj, i) => (
+          <article 
+            key={i} 
+            className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group flex flex-col justify-between border border-stone-200/30"
+          >
+            <div className="space-y-6">
+              <div className="flex items-start justify-between gap-4">
+                <proj.icon className="text-primary shrink-0" size={32} strokeWidth={1.5} />
+                <a 
+                  href={proj.pdf} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="font-label text-[10px] uppercase tracking-widest flex items-center gap-1.5 hover:text-primary transition-colors text-stone-400 group-hover:text-stone-600"
+                >
+                  Read Paper <ArrowUpRight size={14} />
+                </a>
+              </div>
+              
+              <div className="space-y-3">
+                <h3 className="font-headline text-2xl leading-snug group-hover:text-primary transition-colors duration-300">
+                  <a href={proj.pdf} target="_blank" rel="noopener noreferrer">
+                    {proj.title}
+                  </a>
+                </h3>
+                
+                <p className="font-body text-on-surface-variant text-sm leading-relaxed font-light">
+                  {proj.description}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-6 pt-8 mt-auto">
+              <div className="font-body text-xs text-stone-400">
+                Supervised by:{' '}
+                {proj.supervisors ? (
+                  proj.supervisors.map((sup, idx) => (
+                    <span key={sup.name}>
+                      {idx > 0 && ' & '}
+                      <a href={sup.link} target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">
+                        {sup.name}
+                      </a>
+                    </span>
+                  ))
+                ) : proj.supervisor.link ? (
+                  <a href={proj.supervisor.link} target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">
+                    {proj.supervisor.name}
+                  </a>
+                ) : (
+                  <span className="text-stone-500">{proj.supervisor.name}</span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {proj.tags.map(tag => (
+                  <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
 const ExperiencePage = () => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -20 }}
@@ -371,7 +471,7 @@ const ExperiencePage = () => (
     <header className="space-y-8">
       <span className="font-label text-[10px] uppercase tracking-[0.3em] text-stone-400 block">Curriculum Vitae</span>
       <h2 className="font-headline text-6xl md:text-8xl leading-[0.9] tracking-tight">
-        Work <br/><span className="italic font-light">Experience</span>
+        Work <br /><span className="italic font-light">Experience</span>
       </h2>
       <div className="h-px w-24 bg-primary"></div>
     </header>
@@ -445,7 +545,7 @@ const ExperiencePage = () => (
 );
 
 const EducationPage = () => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -20 }}
@@ -453,7 +553,7 @@ const EducationPage = () => (
   >
     <header className="max-w-3xl space-y-8">
       <h2 className="font-headline text-6xl md:text-8xl leading-[0.9] tracking-tight">
-        Academic <br/><span className="italic font-light">Foundations</span>
+        Academic <br /><span className="italic font-light">Foundations</span>
       </h2>
       <div className="h-px w-24 bg-primary"></div>
     </header>
@@ -464,25 +564,56 @@ const EducationPage = () => (
           degree: 'Msc. Artificial Intelligence',
           period: 'Sept 2024 — Ongoing',
           school: 'University of Amsterdam',
-          desc: 'Participating in the ELLIS MSc Honours Programme. Electives include: Foundation Models, Deep Learning 2, Recommender Systems, Machine Learning 2, Information Theory, and Information Retrieval 2.',
+          desc: (
+            <div className="space-y-4">
+              <p>
+                Participating in the ELLIS MSc Honours Programme. Electives include: Foundation Models, Deep Learning 2, Recommender Systems, Machine Learning 2, Project AI, and Information Retrieval 2.
+              </p>
+              <div className="space-y-2">
+                <p>
+                  Research visit to <strong>EML Munich</strong> while working on my MSc Thesis:
+                </p>
+                <p className="font-headline text-lg italic text-primary pl-4 border-l-2 border-primary/20 my-2">
+                  "Efficient Fine-Tuning of Diffusion Models with Differentiable Rewards"
+                </p>
+                <p>
+                  supervised by Luca Eyring, Yingjun Du, Zeynep Akata, and Cees Snoek.
+                </p>
+              </div>
+            </div>
+          ),
           tags: ['Foundation Models', 'Deep Learning', 'Information Retrieval']
         },
         {
           degree: 'BSc. Kunstmatige Intelligentie',
           period: 'Sept 2021 — Aug 2024',
           school: 'University of Amsterdam',
-          desc: 'Thesis: "Lost but not only in the Middle: Positional Bias in Retrieval Augmented Generation". Grade: 8.5. Accepted for ECIR 2025.',
+          desc: (
+            <div className="space-y-2">
+              <p>
+                Thesis:
+              </p>
+              <p className="font-headline text-lg italic text-primary pl-4 border-l-2 border-primary/20 my-2">
+                "Lost but not only in the Middle: Positional Bias in Retrieval Augmented Generation"
+              </p>
+              <p>
+                Grade: 8.5. Accepted for ECIR 2025.
+              </p>
+            </div>
+          ),
           tags: ['RAG', 'Positional Bias', 'AI']
         }
       ].map((edu, i) => (
         <article key={i} className="group grid grid-cols-1 md:grid-cols-12 gap-8">
           <div className="md:col-start-3 md:col-span-8 space-y-6">
             <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
-              <h3 className="font-headline text-3xl md:text-4xl group-hover:italic transition-all duration-500 leading-tight">{edu.degree}</h3>
+              <h3 className="font-headline text-3xl md:text-4xl leading-tight">{edu.degree}</h3>
               <span className="font-label text-[10px] uppercase tracking-widest text-primary font-bold shrink-0">{edu.period}</span>
             </div>
             <p className="font-headline text-xl italic text-stone-400">{edu.school}</p>
-            <p className="font-body text-lg text-on-surface-variant leading-relaxed font-light">{edu.desc}</p>
+            <div className="font-body text-lg text-on-surface-variant leading-relaxed font-light">
+              {edu.desc}
+            </div>
             <div className="flex flex-wrap gap-2 pt-4">
               {edu.tags.map(tag => (
                 <span key={tag} className="bg-stone-100 px-3 py-1 rounded-sm text-stone-500 text-[9px] uppercase font-bold tracking-widest">{tag}</span>
@@ -500,26 +631,59 @@ const EducationPage = () => (
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('home');
 
-  // Scroll to top on tab change
+  const scrollToSection = (id: Tab) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveTab(id);
+    }
+  };
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [activeTab]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveTab(entry.target.id as Tab);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "-15% 0px -45% 0px" }
+    );
+
+    const sections = ['home', 'publications', 'projects', 'experience', 'education'];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100) {
+        setActiveTab('education');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-surface selection:bg-primary/10 selection:text-primary">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
-      
+      <Sidebar activeTab={activeTab} scrollToSection={scrollToSection} />
+      <BottomNav activeTab={activeTab} scrollToSection={scrollToSection} />
+
       <main className="md:ml-64 min-h-screen">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 pt-24 pb-32">
-          <AnimatePresence mode="wait">
-            {activeTab === 'home' && <HomePage key="home" />}
-            {activeTab === 'publications' && <PublicationsPage key="pubs" />}
-            {activeTab === 'experience' && <ExperiencePage key="exp" />}
-            {activeTab === 'education' && <EducationPage key="edu" />}
-          </AnimatePresence>
-          
-          <Footer />
+        <div className="max-w-5xl mx-auto px-6 md:px-12 pt-24 pb-32 space-y-48">
+          <section id="home" className="scroll-mt-24"><HomePage /></section>
+          <section id="publications" className="scroll-mt-24"><PublicationsPage /></section>
+          <section id="projects" className="scroll-mt-24"><ProjectsPage /></section>
+          <section id="experience" className="scroll-mt-24"><ExperiencePage /></section>
+          <section id="education" className="scroll-mt-24"><EducationPage /></section>
+
+          {/* <Footer /> */}
         </div>
       </main>
     </div>

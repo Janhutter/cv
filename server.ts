@@ -22,19 +22,27 @@ async function startServer() {
   let cachedPublications: any[] = [
     {
       title: "Lost but Not Only in the Middle: Positional Bias in Retrieval Augmented Generation",
-      link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
-      authors: "J Hutter, M Marx, J Kamps",
+      link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:u-x6o8ySG0sC",
+      authors: "J Hutter, D Rau, M Marx, J Kamps",
       venue: "47th European Conference on Information Retrieval (ECIR 2025)",
       citations: "7",
       year: "2025"
     },
     {
-      title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
-      link: "https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl",
-      authors: "J Hutter, M Marx, J Kamps",
-      venue: "University of Amsterdam",
+      title: "Improving the Efficiency and Effectiveness of LLM Knowledge Distillation for Conversational Search",
+      link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:9yKSN-GCB0IC",
+      authors: "S Fris, J Hutter, JH Bertrand, S Lupart, M Aliannejadi",
+      venue: "11th International ACM SIGIR Seminar on Conversational Search (SCAI 2026)",
       citations: "0",
-      year: "2024"
+      year: "2026"
+    },
+    {
+      title: "A Systematic Reproducibility Study of BSARec for Sequential Recommendation",
+      link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=hKvg77sAAAAJ&citation_for_view=hKvg77sAAAAJ:d1gkVwhDpl0C",
+      authors: "J Hutter, HC Bakker, S Fris, M Bernardy, Y Liu",
+      venue: "48th European Conference on Information Retrieval (ECIR 2026)",
+      citations: "0",
+      year: "2026"
     }
   ];
   let lastFetch = 0;
