@@ -132,13 +132,13 @@ const HomePage = () => (
     className="space-y-32"
   >
     <section className="space-y-12">
-      <h2 className="font-headline text-5xl md:text-7xl text-on-surface leading-[1.1] tracking-tight max-w-3xl">
-        Improving <span className="italic text-primary">Information Retrieval</span> through dense neural systems.
-      </h2>
+      {/* <h2 className="font-headline text-5xl md:text-7xl text-on-surface leading-[1.1] tracking-tight max-w-3xl"> */}
+        {/* Improving <span className="italic text-primary">Information Retrieval</span> through dense neural systems. */}
+      {/* </h2> */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
         <div className="md:col-start-5 md:col-span-8 space-y-8">
           <p className="font-body text-xl md:text-2xl text-on-surface-variant leading-relaxed font-light">
-            I am a student and student assistant at the University of Amsterdam, specializing in Artificial Intelligence. My research focuses on positional bias in RAG systems and Information Retrieval.
+            Student MSc AI and student assistant at the University of Amsterdam.
           </p>
           <div className="flex gap-6">
             <a href="https://scholar.google.com/citations?user=hKvg77sAAAAJ&hl=nl" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-[0.2em] text-primary hover:gap-4 transition-all group">
@@ -159,25 +159,37 @@ const HomePage = () => (
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group">
-          <BrainCircuit className="text-primary mb-8" size={32} strokeWidth={1.5} />
-          <h4 className="font-headline text-2xl mb-4">Positional Bias in RAG</h4>
+          <Search className="text-primary mb-8" size={32} strokeWidth={1.5} />
+          <h4 className="font-headline text-2xl mb-4">Sequential Recommendation</h4>
           <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-8">
-            A systematic analysis of how the position of retrieved documents impacts response quality in Retrieval Augmented Generation. Accepted for ECIR 2025.
+            A systematic reproducibility study of BSARec, exploring the effectiveness of utilizing the Fourier Transform inside the model architecture. Accepted at ECIR 2026.
           </p>
           <div className="flex flex-wrap gap-2">
-            {['NLP', 'RAG', 'Information Retrieval'].map(tag => (
+            {['Recommender Systems', 'Reproducibility'].map(tag => (
+              <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">{tag}</span>
+            ))}
+          </div>
+        </div>
+              <div className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group">
+          <Search className="text-primary mb-8" size={32} strokeWidth={1.5} />
+          <h4 className="font-headline text-2xl mb-4">Conversational Search</h4>
+          <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-8">
+            Reproducibility study of DiSCo, a distillation method for sparse conversational search. Accepted at SCAI 2026.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {['Recommender Systems', 'Reproducibility'].map(tag => (
               <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">{tag}</span>
             ))}
           </div>
         </div>
         <div className="bg-surface-container-low p-10 rounded-xl hover:bg-surface-container-lowest transition-all duration-500 group">
-          <Search className="text-primary mb-8" size={32} strokeWidth={1.5} />
-          <h4 className="font-headline text-2xl mb-4">Sequential Recommendation</h4>
+          <BrainCircuit className="text-primary mb-8" size={32} strokeWidth={1.5} />
+          <h4 className="font-headline text-2xl mb-4">Positional Bias in RAG</h4>
           <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-8">
-            A systematic reproducibility study of BSARec, exploring the effectiveness of various architectures for sequential recommendation tasks.
+            A systematic analysis of how the position of retrieved documents impacts response quality in Retrieval Augmented Generation. Accepted at ECIR 2025.
           </p>
           <div className="flex flex-wrap gap-2">
-            {['Recommender Systems', 'Reproducibility'].map(tag => (
+            {['NLP', 'RAG', 'Information Retrieval'].map(tag => (
               <span key={tag} className="bg-stone-200/50 text-stone-600 px-2 py-1 text-[9px] uppercase font-bold tracking-widest rounded-sm">{tag}</span>
             ))}
           </div>
